@@ -3,6 +3,8 @@ import './globals.css'
 import { Inter } from 'next/font/google'
 import Navbar from '@/components/Navbar'
 import { Toaster } from '@/components/ui/toaster'
+import Providers from '@/components/Providers'
+
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -11,18 +13,23 @@ export const metadata = {
   description: 'An App to write post built with Next.js and TypeScript.',
 }
 
-export default function RootLayout({
-  children,
-}: {
+export default function RootLayout(
+  props
+: {
   children: React.ReactNode
+  authModal:React.ReactNode
 }) {
   return (
      <html lang="en" className={cn('bg-white text-slate-900 antialiased light',inter.className)}>
-      <body className='min-h-screen pt-12 bg-slate-50 antialiased'>
+      <body className='min-h-screen pt-12 bg-slate-50 antialiased' suppressHydrationWarning={true} >
+        <Providers>
          <Navbar/> 
-        <div className='container max-w-7xl mx-auto h-full pt-12'></div>
-        {children}
+         {props.authModal}
+        <div className='container max-w-7xl mx-auto h-full pt-12'>
+        {props.children}
+        </div>
         <Toaster/>
+        </Providers>
         </body>
     </html>
   )
