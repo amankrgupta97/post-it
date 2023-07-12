@@ -69,7 +69,7 @@ const Layout = async({children,params:{slug}}:{children:React.ReactNode ,params:
                             </div>
                         ):null}
                         {subpostit.creatorId!== session?.user.id ?(
-                             <SubscribeToggle/>
+                             <SubscribeToggle subpostitId={subpostit.id} subpostitName={subpostit.name} isSubscribed={isSubscribed}/>
                         ):null}
                     </dl>
                 </div>
