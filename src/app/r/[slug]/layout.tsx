@@ -3,6 +3,8 @@ import { db } from "@/lib/db"
 import { notFound } from "next/navigation"
 import { format } from 'date-fns'
 import { SubscribeToggle } from "@/components/SubscribeToggle"
+import Link from "next/link"
+import { buttonVariants } from "@/components/ui/button"
 
 const Layout = async({children,params:{slug}}:{children:React.ReactNode ,params:{slug:string}}) => {
     const session=await getAuthSession()
@@ -71,6 +73,12 @@ const Layout = async({children,params:{slug}}:{children:React.ReactNode ,params:
                         {subpostit.creatorId!== session?.user.id ?(
                              <SubscribeToggle subpostitId={subpostit.id} subpostitName={subpostit.name} isSubscribed={isSubscribed}/>
                         ):null}
+                        <Link href={`r/${slug}/submit`} className={buttonVariants({
+                            variant:'outline',
+                            className:'w-full mb-6'
+                        })}>
+                            Create Post
+                        </Link>
                     </dl>
                 </div>
             </div>
