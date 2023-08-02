@@ -13,8 +13,9 @@ export const metadata = {
   description: 'An App to write post built with Next.js and TypeScript.',
 }
 
-export default function RootLayout(
-  props
+export default function RootLayout({
+  children,
+  authModal}
 : {
   children: React.ReactNode
   authModal:React.ReactNode
@@ -24,12 +25,12 @@ export default function RootLayout(
       <body className='min-h-screen pt-12 bg-slate-50 antialiased' suppressHydrationWarning={true} >
         <Providers>
          <Navbar/> 
-         {props.authModal}
+         {authModal}
         <div className='container max-w-7xl mx-auto h-full pt-12'>
-        {props.children}
+        {children}
         </div>
-        <Toaster/>
         </Providers>
+        <Toaster/>
         </body>
     </html>
   )

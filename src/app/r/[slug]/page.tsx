@@ -1,5 +1,6 @@
 import { getAuthSession } from '@/app/api/auth/[...nextauth]/route'
 import { MiniCreatePost } from '@/components/MiniCreatePost'
+import PostFeed from '@/components/PostFeed'
 import { INFINITE_SCROLLING_PAGINATION_RESULTS } from '@/config'
 import { db } from '@/lib/db'
 import { notFound } from 'next/navigation'
@@ -32,6 +33,7 @@ const page = async ({params}:pageProps) => {
     <>
     <h1 className='font-bold text-3xl md:text-4xl h-14'>r/{subpostit.name}</h1>
     <MiniCreatePost session={session}/>
+    <PostFeed initalPost={subpostit.posts} subpostitName={subpostit.name}/>
     </>
   )
 }
