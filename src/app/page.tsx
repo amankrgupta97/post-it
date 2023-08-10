@@ -2,13 +2,17 @@ import { buttonVariants } from '@/components/ui/button'
 import { HomeIcon } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
+import { getAuthSession } from './api/auth/[...nextauth]/route'
+import GeneralFeed from '@/components/GeneralFeed'
+import CustomFeed from '@/components/CustomFeed'
 
-export default function page() {
+export default async function Home() {
+  const session=await getAuthSession()
   return (
     <>
     <h1 className='font-bold text-3xl md:text-4xl'>Your feed</h1>
     <div className='grid grid-cols-1 gap-y-4 md:grid-cols-3 md:gap-x-4 py-6'>
-      {/* feed */}
+      {session? <CustomFeed/>:<GeneralFeed/>}
       {/* subpostit info */}
       <div className='overflow-hidden h-fit rounded-lg border border-gray-200 order-first md:order-last'>
         <div className='bg-emerald-100 px-6 py-4'>

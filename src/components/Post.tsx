@@ -3,7 +3,9 @@ import { Post, User, Vote } from "@prisma/client"
 import { MessageSquare } from "lucide-react"
 import { FC, useRef } from "react"
 import EditorOutput from "./EditorOutput"
+import PostVoteClient from "./post-vote/PostVoteClient"
 
+type PartialVote=Pick<Vote,'type'>
 interface PostProps{
     subpostitName:string
     post:Post & {
@@ -11,20 +13,22 @@ interface PostProps{
         votes:Vote[]
     }
     commentAmt:number
+    votesAmt:number
+    currentVote?:PartialVote
 }
 
-const Post:FC<PostProps> = ({subpostitName,post,commentAmt}) => {
+const Post:FC<PostProps> = ({subpostitName,post,commentAmt,votesAmt,currentVote}) => {
     const pRef=useRef<HTMLDivElement>(null)
   return (
     <div className='rounded-md bg-white shadow'>
         <div className='px-6 py-4 flex justify-between'>
-            {/* TODO:POSTVOTES */}
+            <PostVoteClient postId={post.id} initalVote={currentVote?.type} initalVotesAmt={votesAmt}/>
             <div className='w-0 flex-1'>
                 <div className='max-h-40 mt-1 text-xs text-gray-500'>
                     {subpostitName ? (
                         <>
                         <a className="underline text-zinc-900 text-sm underline-offset-2" href={`/r/${subpostitName}`}>
-                            r/testing
+                            r/{subpostitName}
                         </a>
                         <span className='px-1'>•</span>
                         </>
