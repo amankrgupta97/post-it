@@ -2,11 +2,12 @@
 import { Prisma, Subpostit } from "@prisma/client"
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
-import { useCallback, useState } from "react"
+import { useCallback, useRef, useState } from "react"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "./ui/command"
 import { useRouter } from "next/navigation"
 import { Users } from "lucide-react"
 import debounce from 'lodash.debounce'
+import { useOnClickOutside } from "@/hooks/use-on-click-outside"
 
 const SearchBar = () => {
   const [input, setInput] = useState<string>('')
@@ -30,8 +31,13 @@ const request=debounce(()=>{
   refetch()
 },500)
   const router = useRouter()
+  const commandRef=useRef<HTMLDivElement>(null)
+
+  useOnClickOutside(commandRef,()=>{
+    setInput(' ')
+  })
   return (
-    <Command className="relative rounded-lg border max-w-lg z-50 overflow-visible">
+    <Command ref={commandRef} className="relative rounded-lg border max-w-lg z-50 overflow-visible">
       <CommandInput className="outline-none border-none focus:border-none focus:outline-none ring-0" placeholder="Search communities..."
         value={input} onValueChange={(text) =>
            {setInput(text) 
