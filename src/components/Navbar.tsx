@@ -4,6 +4,7 @@ import { Icons } from './Icons'
 import { buttonVariants } from './ui/button'
 import { getAuthSession } from '@/app/api/auth/[...nextauth]/route'
 import UserAccount from './UserAccount'
+import SearchBar from './SearchBar'
 
 export default async function Navbar() {
   const session=await getAuthSession()
@@ -14,7 +15,7 @@ export default async function Navbar() {
                 <Icons.logo className='h-8 w-8 sm:h-6 sm:w-6'/>
                 <p className='hidden text-zinc-700 text-sm font-medium md:block'>PostIt</p>
             </Link>
-            {/* Search bar */}
+            <SearchBar/>
             {session?.user ?(
               <UserAccount user={session.user}/>
               ):
